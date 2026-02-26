@@ -1,0 +1,155 @@
+.estoque-container {
+  min-height: 85dvh;
+  padding: 24px;
+}
+
+.estoque-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.estoque-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.estoque-form input,
+.estoque-form select {
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.estoque-lista {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.estoque-tabela-header,
+.estoque-item {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 0.8fr 1fr 1fr 1.5fr;
+  gap: 10px;
+  padding: 12px 14px;
+  align-items: center;
+}
+
+.estoque-tabela-header {
+  background: #f2f2f2;
+  font-weight: 700;
+}
+
+.estoque-item {
+  border-top: 1px solid #ececec;
+}
+
+.status.ok {
+  color: #066a06;
+  font-weight: 700;
+}
+
+.status.baixo {
+  color: #b60000;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-danger {
+  background: #b60000;
+}
+
+.btn-danger:hover {
+  background: #8f0000;
+  transform: translateY(-1px);
+}
+
+.btn-cancelar {
+  background: #777;
+}
+
+.btn-cancelar:hover {
+  background: #5f5f5f;
+  transform: translateY(-1px);
+}
+
+.btn-novo {
+  background: #f4cb50;
+  color: #4d3700;
+}
+
+.btn-novo:hover {
+  background: #f8dd7f;
+  box-shadow: 0 6px 14px rgba(166, 122, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-submit {
+  background: #2f9e44;
+}
+
+.btn-submit:hover {
+  background: #238538;
+  box-shadow: 0 6px 14px rgba(35, 133, 56, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-edit {
+  background: #3b82f6;
+}
+
+.btn-edit:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-toggle {
+  background: #8b5cf6;
+}
+
+.btn-toggle:hover {
+  background: #7c3aed;
+  transform: translateY(-1px);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.modal-box h2 {
+  margin-bottom: 12px;
+}
+
+.error-message {
+  color: #b60000;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+  .estoque-tabela-header,
+  .estoque-item {
+    grid-template-columns: 1fr;
+  }
+}

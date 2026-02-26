@@ -1,0 +1,173 @@
+.caixa-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  min-height: 85dvh;
+}
+
+.produtos {
+  padding: 20px;
+}
+
+.grid-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.produto-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 120px;
+  padding: 14px;
+  text-align: left;
+  border: 1px solid #e7e7e7;
+  background: #fff;
+  color: #2b2b2b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.produto-btn:hover {
+  background: #fffdf5;
+  border-color: #f3c84c;
+  box-shadow: 0 10px 20px rgba(188, 136, 10, 0.2);
+  transform: translateY(-2px);
+}
+
+.produto-topo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.produto-nome {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.produto-preco {
+  width: fit-content;
+  background: #fff3cc;
+  color: #7a4e00;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.produto-rodape {
+  display: flex;
+  justify-content: space-between;
+  color: #666;
+}
+
+.carrinho {
+  background: #fff;
+  padding: 20px;
+  border-left: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+}
+
+.itens {
+  flex: 1;
+  overflow-y: auto;
+  margin: 12px 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-actions button {
+  padding: 6px 10px;
+}
+
+.item-actions .btn-qty {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+
+.item-actions .btn-qty:hover {
+  background: #d1d5db;
+}
+
+.item-actions .remove {
+  background: #b60000;
+}
+
+.item-actions .remove:hover {
+  background: #8f0000;
+  box-shadow: 0 6px 12px rgba(143, 0, 0, 0.25);
+}
+
+.acoes,
+.fiado-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.acoes select,
+.fiado-box select {
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.finalizar {
+  background: #066a06;
+}
+
+.finalizar:hover {
+  background: #055705;
+  box-shadow: 0 8px 16px rgba(6, 106, 6, 0.28);
+}
+
+.fiado {
+  background: #c87700;
+}
+
+.fiado:hover {
+  background: #a86300;
+  box-shadow: 0 8px 16px rgba(168, 99, 0, 0.28);
+}
+
+.vendas-recentes {
+  margin-top: 18px;
+  border-top: 1px solid #ececec;
+  padding-top: 12px;
+  font-size: 14px;
+}
+
+.error-message {
+  color: #b60000;
+  margin-top: 8px;
+}
+
+.success-message {
+  color: #066a06;
+  margin-top: 8px;
+}
+
+@media (max-width: 1000px) {
+  .caixa-container {
+    grid-template-columns: 1fr;
+  }
+}

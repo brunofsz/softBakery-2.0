@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TipoPagamento {
+  AVISTA
+  CREDITO
+  FIADO
+}
+
+enum StatusVenda {
+  PAGO
+  PENDENTE
+}
+
+enum TipoMovEstoque {
+  ENTRADA
+  SAIDA
+  AJUSTE
+}
+
+model Produto {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  descricao     String?
+  preco         Decimal  @db.Decimal(10, 2)
+  estoque       Int      @default(0)
+  estoqueMinimo Int      @default(0)
+  ativo         Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  fornecedorId Int
+  fornecedor   Fornecedor @relation(fields: [fornecedorId], references: [id])
+
+  itensVenda    ItemVenda[]
+  movimentacoes MovimentacaoEstoque[]
+}
+
+model Cliente {
+  id           Int      @id @default(autoincrement())
+  nome         String
+  telefone     String?
+  endereco     String?
+  saldoDevedor Decimal  @default(0) @db.Decimal(10, 2)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  vendas     Venda[]
+  pagamentos Pagamento[]
+}
+
+model Fornecedor {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  telefone  String?
+  email     String?
+  endereco  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  produtos Produto[]
+}
+
+model Venda {
+  id            Int           @id @default(autoincrement())
+  total         Decimal       @db.Decimal(10, 2)
+  tipoPagamento TipoPagamento
+  status        StatusVenda
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  saldoPendente Decimal       @default(0) @db.Decimal(10, 2)
+
+  clienteId Int?
+  cliente   Cliente? @relation(fields: [clienteId], references: [id])
+
+  itens ItemVenda[]
+}
+
+model ItemVenda {
+  id            Int     @id @default(autoincrement())
+  quantidade    Int
+  precoUnitario Decimal @db.Decimal(10, 2)
+  subtotal      Decimal @db.Decimal(10, 2)
+
+  vendaId Int
+  venda   Venda @relation(fields: [vendaId], references: [id])
+
+  produtoId Int
+  produto   Produto @relation(fields: [produtoId], references: [id])
+}
+
+model Pagamento {
+  id             Int           @id @default(autoincrement())
+  valor          Decimal       @db.Decimal(10, 2)
+  formaPagamento TipoPagamento
+  createdAt      DateTime      @default(now())
+
+  clienteId Int
+  cliente   Cliente @relation(fields: [clienteId], references: [id])
+}
+
+model MovimentacaoEstoque {
+  id         Int            @id @default(autoincrement())
+  tipo       TipoMovEstoque
+  quantidade Int
+  motivo     String?
+  createdAt  DateTime       @default(now())
+
+  produtoId Int
+  produto   Produto @relation(fields: [produtoId], references: [id])
+}
