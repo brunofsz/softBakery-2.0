@@ -1,252 +1,243 @@
-import { useEffect, useState } from "react";
-import { api } from "../services/api";
-import { formatCurrency } from "../utils/format";
-import "./Clientes.css";
+import { useEffect, useState } from 'react'
+import ClienteFormModal from '../components/ClienteFormModal.jsx'
+import PagamentoFormModal from '../components/PagamentoFormModal.jsx'
+import './Clientes.css'
+import {
+  atualizarCliente,
+  criarCliente,
+  excluirCliente,
+  listarClientes,
+} from "../services/clientesService.js"
+import { criarPagamento } from '../services/pagamentosService.js'
+import formatMoney from '../utils/formatMoney.js'
+import formatTelefone from '../utils/formatTelefone.js'
+import useToast from '../hooks/useToast.js'
 
-const initialForm = {
-  nome: "",
-  telefone: "",
-  endereco: "",
-};
-
-export default function Clientes() {
-  const [clientes, setClientes] = useState([]);
-  const [form, setForm] = useState(initialForm);
-  const [editId, setEditId] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [paymentForm, setPaymentForm] = useState({
-    clienteId: "",
-    valor: "",
-    formaPagamento: "AVISTA",
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  async function loadClientes() {
-    try {
-      setLoading(true);
-      const data = await api.get("/clientes");
-      setClientes(data || []);
-      setError("");
-    } catch (err) {
-      setError(err.message || "Erro ao carregar clientes");
-    } finally {
-      setLoading(false);
-    }
-  }
+const Clientes = () => {
+  const [clientes, setClientes] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalMode, setModalMode] = useState('create')
+  const [clienteEmEdicao, setClienteEmEdicao] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [modalErrorMessage, setModalErrorMessage] = useState('')
+  const [isPagamentoModalOpen, setIsPagamentoModalOpen] = useState(false)
+  const [pagamentoClienteId, setPagamentoClienteId] = useState('')
+  const [pagamentoErrorMessage, setPagamentoErrorMessage] = useState('')
 
   useEffect(() => {
-    loadClientes();
-  }, []);
+    carregarClientes()
+  }, [])
 
-  function onChange(event) {
-    setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
-  }
-
-  function startEdit(cliente) {
-    setEditId(cliente.id);
-    setForm({
-      nome: cliente.nome || "",
-      telefone: cliente.telefone || "",
-      endereco: cliente.endereco || "",
-    });
-    setIsModalOpen(true);
-  }
-
-  function resetForm() {
-    setEditId(null);
-    setForm(initialForm);
-    setIsModalOpen(false);
-  }
-
-  function openCreateModal() {
-    setEditId(null);
-    setForm(initialForm);
-    setIsModalOpen(true);
-  }
-
-  function openPaymentModal(cliente) {
-    setPaymentForm({
-      clienteId: String(cliente.id),
-      valor: "",
-      formaPagamento: "AVISTA",
-    });
-    setIsPaymentModalOpen(true);
-  }
-
-  function closePaymentModal() {
-    setPaymentForm({
-      clienteId: "",
-      valor: "",
-      formaPagamento: "AVISTA",
-    });
-    setIsPaymentModalOpen(false);
-  }
-
-  async function onSubmit(event) {
-    event.preventDefault();
+  const carregarClientes = async () => {
     try {
-      if (editId) {
-        await api.put(`/clientes/${editId}`, form);
+      setLoading(true)
+      setErrorMessage('')
+
+      const data = await listarClientes()
+      setClientes(data)
+    } catch (error) {
+      console.error(error)
+      setErrorMessage(error.message || 'Nao foi possivel carregar os clientes.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const abrirModalCriacao = () => {
+    setModalMode('create')
+    setClienteEmEdicao(null)
+    setModalErrorMessage('')
+    setIsModalOpen(true)
+  }
+
+  const abrirModalEdicao = (cliente) => {
+    setModalMode('edit')
+    setClienteEmEdicao(cliente)
+    setModalErrorMessage('')
+    setIsModalOpen(true)
+  }
+
+  const fecharModal = () => {
+    if (isSubmitting) {
+      return
+    }
+
+    setIsModalOpen(false)
+    setClienteEmEdicao(null)
+    setModalErrorMessage('')
+  }
+
+  const handleSubmitCliente = async (clienteData) => {
+    try {
+      setIsSubmitting(true)
+      setModalErrorMessage('')
+
+      if (modalMode === 'edit' && clienteEmEdicao) {
+        await atualizarCliente(clienteEmEdicao.id, clienteData)
+        useToast('Cliente atualizado com sucesso.')
       } else {
-        await api.post("/clientes", form);
+        await criarCliente(clienteData)
+        useToast('Cliente criado com sucesso.')
       }
-      resetForm();
-      await loadClientes();
-    } catch (err) {
-      setError(err.message || "Erro ao salvar cliente");
+
+      await carregarClientes()
+      fecharModal()
+    } catch (error) {
+      console.error(error)
+      const message = error.message || 'Nao foi possivel salvar o cliente.'
+      setModalErrorMessage(message)
+      useToast(message, 'error')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
-  async function handleDelete(id) {
-    const confirmed = window.confirm("Deseja remover este cliente?");
-    if (!confirmed) return;
-
+  const handleExcluirCliente = async (id) => {
     try {
-      await api.delete(`/clientes/${id}`);
-      await loadClientes();
-    } catch (err) {
-      setError(err.message || "Erro ao remover cliente");
+      await excluirCliente(id)
+      await carregarClientes()
+      useToast('Cliente excluido com sucesso.')
+    } catch (error) {
+      console.error(error)
+      const message = error.message || 'Nao foi possivel excluir o cliente.'
+      useToast(message, 'error')
     }
   }
 
-  async function handlePaymentSubmit(event) {
-    event.preventDefault();
+  const abrirModalPagamento = (clienteId = '') => {
+    setPagamentoClienteId(clienteId)
+    setPagamentoErrorMessage('')
+    setIsPagamentoModalOpen(true)
+  }
+
+  const fecharModalPagamento = () => {
+    if (isSubmitting) {
+      return
+    }
+
+    setIsPagamentoModalOpen(false)
+    setPagamentoClienteId('')
+    setPagamentoErrorMessage('')
+  }
+
+  const handleSubmitPagamento = async (pagamentoData) => {
     try {
-      await api.post("/pagamentos", {
-        clienteId: Number(paymentForm.clienteId),
-        valor: Number(paymentForm.valor),
-        formaPagamento: paymentForm.formaPagamento,
-      });
-      closePaymentModal();
-      await loadClientes();
-    } catch (err) {
-      setError(err.message || "Erro ao registrar pagamento");
+      setIsSubmitting(true)
+      setPagamentoErrorMessage('')
+
+      await criarPagamento(pagamentoData)
+      await carregarClientes()
+      fecharModalPagamento()
+      useToast('Pagamento registrado com sucesso.')
+    } catch (error) {
+      console.error(error)
+      const message = error.message || 'Nao foi possivel registrar o pagamento.'
+      setPagamentoErrorMessage(message)
+      useToast(message, 'error')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="clientes-container">
-      <div className="clientes-header">
-        <h1>Clientes</h1>
-        <div className="header-actions">
-          <button type="button" className="btn-payment" onClick={() => setIsPaymentModalOpen(true)}>
-            Registrar Pagamento
+    <div className="page">
+      <div className="pageHeader pageHeaderInline">
+        <div>
+          <h1>Clientes</h1>
+          <p>Controle de clientes e saldos devedores</p>
+        </div>
+
+        <div className="tableActions">
+          <button className="primaryBtn" onClick={() => abrirModalPagamento()}>
+            Registrar pagamento
           </button>
-          <button type="button" className="btn-novo" onClick={openCreateModal}>
-            + Novo Cliente
+          <button className="primaryBtn" onClick={abrirModalCriacao}>
+            Novo cliente
           </button>
         </div>
       </div>
 
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={resetForm}>
-          <div className="modal-box" onClick={(event) => event.stopPropagation()}>
-            <h2>{editId ? "Editar Cliente" : "Novo Cliente"}</h2>
-            <form className="clientes-form" onSubmit={onSubmit}>
-              <input name="nome" placeholder="Nome" value={form.nome} onChange={onChange} required />
-              <input name="telefone" placeholder="Telefone" value={form.telefone} onChange={onChange} />
-              <input name="endereco" placeholder="Endereco" value={form.endereco} onChange={onChange} />
-              <button type="submit" className="btn-submit">{editId ? "Atualizar" : "Criar Cliente"}</button>
-              <button type="button" className="btn-cancelar" onClick={resetForm}>
-                Fechar
-              </button>
-            </form>
+      <div className="sectionCard">
+        {loading && <p>Carregando clientes...</p>}
+
+        {!loading && errorMessage && <p>{errorMessage}</p>}
+
+        {!loading && !errorMessage && clientes.length === 0 && (
+          <p>Nenhum cliente encontrado.</p>
+        )}
+
+        {!loading && !errorMessage && clientes.length > 0 && (
+          <div className="tableWrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Telefone</th>
+                  <th>Endereco</th>
+                  <th>Saldo devedor</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clientes.map((cliente) => (
+                  <tr key={cliente.id}>
+                    <td>{cliente.nome}</td>
+                    <td>{formatTelefone(cliente.telefone)}</td>
+                    <td>{cliente.endereco}</td>
+                    <td>{formatMoney(cliente.saldoDevedor)}</td>
+                    <td>
+                      <div className="tableActions">
+                        <button
+                          className="tableBtn edit"
+                          onClick={() => abrirModalEdicao(cliente)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className="tableBtn"
+                          onClick={() => abrirModalPagamento(cliente.id)}
+                        >
+                          Pagar
+                        </button>
+                        <button
+                          className="tableBtn delete"
+                          onClick={() => handleExcluirCliente(cliente.id)}
+                        >
+                          Excluir
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {isPaymentModalOpen && (
-        <div className="modal-overlay" onClick={closePaymentModal}>
-          <div className="modal-box" onClick={(event) => event.stopPropagation()}>
-            <h2>Registrar Pagamento</h2>
-            <form className="clientes-form" onSubmit={handlePaymentSubmit}>
-              <select
-                value={paymentForm.clienteId}
-                onChange={(event) =>
-                  setPaymentForm((prev) => ({ ...prev, clienteId: event.target.value }))
-                }
-                required
-              >
-                <option value="">Selecione o cliente</option>
-                {clientes
-                  .filter((cliente) => Number(cliente.saldoDevedor) > 0)
-                  .map((cliente) => (
-                    <option key={cliente.id} value={cliente.id}>
-                      {cliente.nome} ({formatCurrency(cliente.saldoDevedor)})
-                    </option>
-                  ))}
-              </select>
-              <input
-                type="number"
-                min="0.01"
-                step="0.01"
-                placeholder="Valor recebido"
-                value={paymentForm.valor}
-                onChange={(event) =>
-                  setPaymentForm((prev) => ({ ...prev, valor: event.target.value }))
-                }
-                required
-              />
-              <select
-                value={paymentForm.formaPagamento}
-                onChange={(event) =>
-                  setPaymentForm((prev) => ({ ...prev, formaPagamento: event.target.value }))
-                }
-              >
-                <option value="AVISTA">A vista</option>
-                <option value="CREDITO">Credito</option>
-              </select>
-              <button type="submit" className="btn-submit">Confirmar Pagamento</button>
-              <button type="button" className="btn-cancelar" onClick={closePaymentModal}>
-                Fechar
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      <ClienteFormModal
+        isOpen={isModalOpen}
+        mode={modalMode}
+        initialValues={clienteEmEdicao}
+        isSubmitting={isSubmitting}
+        errorMessage={modalErrorMessage}
+        onClose={fecharModal}
+        onSubmit={handleSubmitCliente}
+      />
 
-      {error && <p className="error-message">{error}</p>}
-
-      {loading ? (
-        <p>Carregando...</p>
-      ) : (
-        <div className="clientes-lista">
-          <div className="clientes-tabela-header">
-            <span>Nome</span>
-            <span>Telefone</span>
-            <span>Endereco</span>
-            <span>Saldo Devedor</span>
-            <span>Acoes</span>
-          </div>
-
-          {clientes.map((cliente) => {
-            const saldo = Number(cliente.saldoDevedor || 0);
-            return (
-              <div key={cliente.id} className="cliente-item">
-                <span>{cliente.nome}</span>
-                <span>{cliente.telefone || "-"}</span>
-                <span>{cliente.endereco || "-"}</span>
-                <span className={saldo > 0 ? "saldo negativo" : "saldo positivo"}>
-                  {formatCurrency(saldo)}
-                </span>
-                <div className="actions">
-                  <button type="button" className="btn-edit" onClick={() => startEdit(cliente)}>
-                    Editar
-                  </button>
-                  <button type="button" className="btn-payment" onClick={() => openPaymentModal(cliente)}>
-                    Pagamento
-                  </button>
-                  <button type="button" className="btn-danger" onClick={() => handleDelete(cliente.id)}>
-                    Excluir
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <PagamentoFormModal
+        isOpen={isPagamentoModalOpen}
+        clientes={clientes.filter((cliente) => Number(cliente.saldoDevedor) > 0)}
+        initialClienteId={pagamentoClienteId}
+        isSubmitting={isSubmitting}
+        errorMessage={pagamentoErrorMessage}
+        onClose={fecharModalPagamento}
+        onSubmit={handleSubmitPagamento}
+      />
     </div>
-  );
+  )
 }
+
+export default Clientes

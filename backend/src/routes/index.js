@@ -5,6 +5,7 @@ import {
   vendaController,
   clienteController,
   pagamentoController,
+  dashboardController,
 } from "../controllers/index.js";
 
 const router = Router();
@@ -50,5 +51,7 @@ router.get("/vendas", vendaController.getAll);
 router.get("/vendas/:id", vendaController.getById);
 
 router.post("/pagamentos", pagamentoController.create);
+
+router.get("/dashboard", dashboardController.getResumo);
 
 export default router;

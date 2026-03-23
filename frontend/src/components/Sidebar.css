@@ -1,0 +1,110 @@
+.sideBar {
+  width: min(clamp(15rem, 18dvw, 17.5rem), 100%);
+  min-height: 100dvh;
+  background: #1f1b18;
+  color: #fff;
+  padding: clamp(1.5rem, 2dvw, 2rem) clamp(1.125rem, 1.5dvw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
+
+.sideBarTop {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 0.8dvw, 1rem);
+  margin-bottom: clamp(1.75rem, 2.5dvw, 2.5rem);
+}
+
+.sideBarLogo {
+  width: clamp(2.75rem, 3.2dvw, 3rem);
+  height: clamp(2.75rem, 3.2dvw, 3rem);
+  object-fit: contain;
+  border-radius: clamp(0.75rem, 0.9dvw, 0.875rem);
+  background: #fff;
+  padding: clamp(0.25rem, 0.35dvw, 0.5rem);
+}
+
+.sideBarTop h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.sideBarTop span {
+  color: #f59e0b;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.sideBarNav {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 0.6dvw, 0.75rem);
+}
+
+.sideBarFooter {
+  margin-top: auto;
+  padding-top: clamp(1.5rem, 2dvw, 2rem);
+}
+
+.sideBarLink {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 0.8dvw, 1rem);
+  color: #d6d3d1;
+  text-decoration: none;
+  padding: clamp(0.7rem, 0.9dvw, 0.85rem) clamp(0.95rem, 1.3dvw, 1.15rem);
+  border-radius: clamp(0.75rem, 0.9dvw, 0.875rem);
+  transition: 0.2s ease;
+  font-size: 1rem;
+}
+
+.sideBarLink svg {
+  font-size: 1.3rem;
+}
+
+.sideBarLink:hover {
+  background: #2f2925;
+  color: #fff;
+}
+
+.sideBarLink.active {
+  background: #f59e0b;
+  color: #fff;
+  font-weight: 600;
+}
+
+.supportButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 0.6dvw, 0.75rem);
+  width: 100%;
+  padding: clamp(0.7rem, 0.9dvw, 0.85rem) clamp(0.95rem, 1.3dvw, 1.15rem);
+  border-radius: clamp(0.75rem, 0.9dvw, 0.875rem);
+  border: 1px solid #3f3833;
+  background: #2f2925;
+  color: #f5f5f5;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.supportButton:hover {
+  background: #3a332f;
+  border-color: #514841;
+}
+
+@media (max-width: 700px) {
+  .sideBar {
+    position: static;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .sideBarNav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

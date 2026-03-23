@@ -1,0 +1,115 @@
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.125rem, 1.5dvw, 1.5rem);
+}
+
+.infoCard {
+  background: #fff;
+  border-radius: clamp(1.125rem, 1.6dvw, 1.375rem);
+  padding: clamp(1rem, 1.4dvw, 1.25rem);
+  box-shadow: 0 0.45dvh 1.2dvh rgba(0, 0, 0, 0.05);
+}
+
+.infoCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(1rem, 1.1dvw, 1.25rem);
+}
+
+.infoCardTop span {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.infoCard h2 {
+  font-size: 1.9rem;
+}
+
+.cardIcon {
+  width: clamp(2.6rem, 3.2dvw, 2.8rem);
+  height: clamp(2.6rem, 3.2dvw, 2.8rem);
+  border-radius: clamp(0.75rem, 0.9dvw, 0.875rem);
+  background: #fff3e0;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.dashboardChartsGrid,
+.dashboardTablesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.125rem, 1.5dvw, 1.5rem);
+}
+
+.chartCard {
+  min-height: clamp(21rem, 42dvh, 24rem);
+}
+
+.chartWrapper {
+  width: 100%;
+  height: clamp(16rem, 30dvh, 18.75rem);
+}
+
+.detailsList {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 0.8dvw, 1rem);
+}
+
+.detailsItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1rem, 1.1dvw, 1.25rem);
+  padding: clamp(0.75rem, 0.8dvw, 1rem);
+  border: 1px solid #e5e7eb;
+  border-radius: clamp(0.75rem, 0.9dvw, 0.875rem);
+  background: #fff;
+}
+
+.detailsItem p {
+  margin-top: clamp(0.25rem, 0.35dvw, 0.5rem);
+  color: #6b7280;
+}
+
+.detailsValues {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.25rem, 0.35dvw, 0.5rem);
+  text-align: right;
+  color: #374151;
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboardChartsGrid,
+  .dashboardTablesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailsItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detailsValues {
+    text-align: left;
+  }
+}

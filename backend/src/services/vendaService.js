@@ -110,7 +110,7 @@ const vendaService = {
     const vendas = await prisma.venda.findMany({
       orderBy: { createdAt: "desc" },
       include: {
-        cliente: true, // pode vir null
+        cliente: true, 
         itens: {
           include: {
             produto: true,

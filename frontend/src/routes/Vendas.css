@@ -1,0 +1,56 @@
+.detailsRow td {
+  padding: 0;
+  background: #fcfcfd;
+}
+
+.detailsCard {
+  padding: clamp(1.125rem, 1.5dvw, 1.5rem);
+  background: #f9fafb;
+}
+
+.detailsCard h3 {
+  margin-bottom: clamp(0.75rem, 0.8dvw, 1rem);
+  font-size: 1rem;
+}
+
+.detailsList {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 0.8dvw, 1rem);
+}
+
+.detailsItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1rem, 1.1dvw, 1.25rem);
+  padding: clamp(0.75rem, 0.8dvw, 1rem);
+  border: 1px solid #e5e7eb;
+  border-radius: clamp(0.75rem, 0.9dvw, 0.875rem);
+  background: #fff;
+}
+
+.detailsItem p {
+  margin-top: clamp(0.25rem, 0.35dvw, 0.5rem);
+  color: #6b7280;
+}
+
+.detailsValues {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.25rem, 0.35dvw, 0.5rem);
+  text-align: right;
+  color: #374151;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .detailsItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detailsValues {
+    text-align: left;
+  }
+}

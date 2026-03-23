@@ -1,0 +1,119 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 2dvw, 2rem);
+  z-index: 1000;
+}
+
+.modalCard {
+  width: min(35dvw, 100%);
+  min-width: min(35rem, 100%);
+  background: #fff;
+  border-radius: clamp(1.125rem, 1.6dvw, 1.375rem);
+  padding: clamp(1.5rem, 2dvw, 2rem);
+  box-shadow: 0 1.8dvh 4.2dvh rgba(15, 23, 42, 0.2);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(1rem, 1.1dvw, 1.25rem);
+  margin-bottom: clamp(1.5rem, 2dvw, 2rem);
+}
+
+.modalHeader h2 {
+  margin-bottom: clamp(0.25rem, 0.35dvw, 0.5rem);
+}
+
+.modalHeader p {
+  color: #6b7280;
+}
+
+.modalCloseBtn {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #374151;
+  padding: clamp(0.5rem, 0.6dvw, 0.75rem) clamp(0.75rem, 0.8dvw, 1rem);
+  border-radius: clamp(0.625rem, 0.7dvw, 0.75rem);
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.1dvw, 1.25rem);
+}
+
+.modalFormGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 1.1dvw, 1.25rem);
+}
+
+.modalField {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 0.6dvw, 0.75rem);
+}
+
+.modalField span {
+  font-weight: 600;
+  color: #374151;
+}
+
+.modalInput {
+  width: 100%;
+  padding: clamp(0.75rem, 0.95dvw, 0.9rem) clamp(0.85rem, 1.1dvw, 1rem);
+  border: 1px solid #d1d5db;
+  border-radius: clamp(0.75rem, 0.9dvw, 0.875rem);
+  outline: none;
+  font: inherit;
+  background: #fff;
+}
+
+.modalInput:focus {
+  border-color: #f59e0b;
+}
+
+.modalError {
+  color: #b91c1c;
+  font-size: 0.95rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: clamp(0.75rem, 0.8dvw, 1rem);
+}
+
+@media (max-width: 700px) {
+  .modalOverlay {
+    padding: clamp(1rem, 1.1dvw, 1.25rem);
+    align-items: flex-start;
+  }
+
+  .modalCard {
+    width: 100%;
+    min-width: 0;
+    padding: clamp(1.125rem, 1.5dvw, 1.5rem);
+  }
+
+  .modalHeader,
+  .modalActions {
+    flex-direction: column;
+  }
+
+  .modalCloseBtn,
+  .modalActions .tableBtn,
+  .modalActions .primaryBtn {
+    width: 100%;
+  }
+
+  .modalFormGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -37,6 +37,7 @@ const produtoService = {
   getAll: async () => {
     const produtos = await prisma.produto.findMany({
       include: { fornecedor: true },
+      orderBy: { id: "asc" },
     });
     return produtos;
   },
