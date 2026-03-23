@@ -6,7 +6,7 @@ const pagamentoService = {
     const { clienteId, valor, formaPagamento } = data;
 
     if (valor <= 0) {
-      throw new Error("Valor invalido");
+      throw new Error("Valor inválido");
     }
 
     return await prisma.$transaction(async (tx) => {
@@ -23,7 +23,7 @@ const pagamentoService = {
       }
 
       if (valor > Number(cliente.saldoDevedor)) {
-        throw new Error("O valor pago é maior que a divida");
+        throw new Error("O valor pago é maior que a dívida");
       }
 
       const pagamento = await tx.pagamento.create({
@@ -35,7 +35,6 @@ const pagamentoService = {
         data: { saldoDevedor: { decrement: valor } },
       });
 
-      //Quitando vendas pendentes
       const vendasPendentes = await tx.venda.findMany({
         where: { clienteId: clienteId, status: StatusVenda.PENDENTE },
         orderBy: { createdAt: "asc" },

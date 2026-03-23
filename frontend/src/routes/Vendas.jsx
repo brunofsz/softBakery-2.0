@@ -5,14 +5,13 @@ import formatMoney from '../utils/formatMoney'
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import './Vendas.css'
 
-
 const formatTipoPagamento = (tipoPagamento) => {
   if (tipoPagamento === 'AVISTA') {
-    return 'A vista'
+    return 'À vista'
   }
 
   if (tipoPagamento === 'CREDITO') {
-    return 'Credito'
+    return 'Crédito'
   }
 
   if (tipoPagamento === 'FIADO') {
@@ -44,7 +43,7 @@ const Vendas = () => {
         setVendas(data)
       } catch (error) {
         console.error(error)
-        setErrorMessage('Nao foi possivel carregar as vendas.')
+        setErrorMessage('Não foi possível carregar as vendas.')
       } finally {
         setLoading(false)
       }
@@ -57,8 +56,8 @@ const Vendas = () => {
     <div className="page">
       <div className="pageHeader">
         <div>
-          <h1>Historico de vendas</h1>
-          <p>Consulta das vendas ja registradas no sistema</p>
+          <h1>Histórico de vendas</h1>
+          <p>Consulta das vendas já registradas no sistema</p>
         </div>
       </div>
 
@@ -131,7 +130,7 @@ const Vendas = () => {
                                     </div>
 
                                     <div className="detailsValues">
-                                      <span>Unitario: {formatMoney(item.precoUnitario)}</span>
+                                      <span>Unitário: {formatMoney(item.precoUnitario)}</span>
                                       <span>Subtotal: {formatMoney(item.subtotal)}</span>
                                     </div>
                                   </div>

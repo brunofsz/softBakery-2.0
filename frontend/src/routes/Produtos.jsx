@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import ProdutoFormModal from '../components/ProdutoFormModal'
 import useToast from '../hooks/useToast'
+import { listarFornecedores } from '../services/fornecedoresService'
 import {
   atualizarProduto,
   criarProduto,
@@ -11,6 +12,7 @@ import './Produtos.css'
 
 const Produtos = () => {
   const [produtos, setProdutos] = useState([])
+  const [fornecedores, setFornecedores] = useState([])
   const [loading, setLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -28,17 +30,21 @@ const Produtos = () => {
       setLoading(true)
       setErrorMessage('')
 
-      const data = await listarProdutos()
-      setProdutos(data)
+      const [produtosData, fornecedoresData] = await Promise.all([
+        listarProdutos(),
+        listarFornecedores(),
+      ])
+
+      setProdutos(produtosData)
+      setFornecedores(fornecedoresData)
     } catch (error) {
       console.error(error)
-      setErrorMessage('Nao foi possivel carregar os produtos.')
+      setErrorMessage(error.message || 'Não foi possível carregar os produtos.')
     } finally {
       setLoading(false)
     }
   }
 
-  // Novo: prepara o modal para cadastrar um produto novo.
   const abrirModalCriacao = () => {
     setModalMode('create')
     setProdutoEmEdicao(null)
@@ -46,7 +52,6 @@ const Produtos = () => {
     setIsModalOpen(true)
   }
 
-  // Novo: prepara o modal com os dados do produto selecionado.
   const abrirModalEdicao = (produto) => {
     setModalMode('edit')
     setProdutoEmEdicao(produto)
@@ -54,7 +59,6 @@ const Produtos = () => {
     setIsModalOpen(true)
   }
 
-  // Novo: fecha o modal e limpa mensagens temporarias.
   const fecharModal = () => {
     if (isSubmitting) {
       return
@@ -65,7 +69,6 @@ const Produtos = () => {
     setModalErrorMessage('')
   }
 
-  // Novo: decide se vamos criar ou atualizar e depois recarrega a tabela.
   const handleSubmitProduto = async (produtoData) => {
     try {
       setIsSubmitting(true)
@@ -83,22 +86,21 @@ const Produtos = () => {
       fecharModal()
     } catch (error) {
       console.error(error)
-      setModalErrorMessage('Nao foi possivel salvar o produto.')
-      useToast('Nao foi possivel salvar o produto.', 'error')
+      setModalErrorMessage(error.message || 'Não foi possível salvar o produto.')
+      useToast(error.message || 'Não foi possível salvar o produto.', 'error')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  // Novo: remove um produto e atualiza a lista.
   const handleExcluirProduto = async (id) => {
     try {
       await excluirProduto(id)
       await carregarProdutos()
-      useToast('Produto excluido com sucesso.')
+      useToast('Produto excluído com sucesso.')
     } catch (error) {
       console.error(error)
-      useToast(error.message || 'Nao foi possivel excluir o produto.', 'error')
+      useToast(error.message || 'Não foi possível excluir o produto.', 'error')
     }
   }
 
@@ -130,9 +132,9 @@ const Produtos = () => {
               <thead>
                 <tr>
                   <th>Nome</th>
-                  <th>Preco</th>
+                  <th>Preço</th>
                   <th>Estoque</th>
-                  <th>Estoque minimo</th>
+                  <th>Estoque mínimo</th>
                   <th>Status</th>
                   <th>Ações</th>
                 </tr>
@@ -186,11 +188,11 @@ const Produtos = () => {
         )}
       </div>
 
-      {/* Novo: o mesmo modal atende os fluxos de criar e editar. */}
       <ProdutoFormModal
         isOpen={isModalOpen}
         mode={modalMode}
         initialValues={produtoEmEdicao}
+        fornecedores={fornecedores}
         isSubmitting={isSubmitting}
         errorMessage={modalErrorMessage}
         onClose={fecharModal}

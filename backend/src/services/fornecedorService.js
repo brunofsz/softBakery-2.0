@@ -40,7 +40,7 @@ const fornecedorService = {
   },
   update: async (id, data) => {
     if (Number.isNaN(id)) {
-      throw new Error("ID Invalido");
+      throw new Error("ID inválido");
     }
     const updated = await prisma.fornecedor.update({
       where: {
@@ -57,7 +57,7 @@ const fornecedorService = {
     });
 
     if (fornecedor.produtos && fornecedor.produtos.length > 0) {
-      throw new Error("Não é possivel excluir um fornecedor com produtos");
+      throw new Error("Não é possível excluir um fornecedor com produtos");
     }
 
     await prisma.fornecedor.delete({

@@ -36,7 +36,7 @@ const Caixa = () => {
         setClientes(clientesData)
       } catch (error) {
         console.error(error)
-        setErrorMessage(error.message || 'Nao foi possivel carregar os dados do caixa.')
+        setErrorMessage(error.message || 'Não foi possível carregar os dados do caixa.')
       } finally {
         setLoading(false)
       }
@@ -89,12 +89,12 @@ const Caixa = () => {
     const quantidadeNoCarrinho = getQuantidadeNoCarrinho(produto.id)
 
     if (produto.estoque <= 0) {
-      useToast(`O produto ${produto.nome} esta sem estoque.`, 'error')
+      useToast(`O produto ${produto.nome} está sem estoque.`, 'error')
       return
     }
 
     if (quantidadeNoCarrinho >= produto.estoque) {
-      useToast(`Voce ja atingiu o estoque disponivel de ${produto.nome}.`, 'error')
+      useToast(`Você já atingiu o estoque disponível de ${produto.nome}.`, 'error')
       return
     }
 
@@ -188,7 +188,7 @@ const Caixa = () => {
       setClientes(clientesData)
     } catch (error) {
       console.error(error)
-      useToast(error.message || 'Nao foi possivel finalizar a venda.', 'error')
+      useToast(error.message || 'Não foi possível finalizar a venda.', 'error')
     } finally {
       setIsSubmitting(false)
     }
@@ -203,7 +203,7 @@ const Caixa = () => {
     <div className="page">
       <div className="pageHeader">
         <h1>Caixa</h1>
-        <p>Registre e finalize vendas no balcao</p>
+        <p>Registre e finalize vendas no balcão</p>
       </div>
 
       <div className="caixaGrid">
@@ -217,7 +217,7 @@ const Caixa = () => {
               onChange={(event) => setSearchTerm(event.target.value)}
               ref={searchInputRef}
             />
-            <p className="caixaHintText">Atalhos: `Ctrl+K` busca, `F2+enter` pagamento, `F4` finalizar</p>
+            <p className="caixaHintText">Atalhos: `Ctrl+K` busca, `F2+Enter` pagamento, `F4` finalizar</p>
           </div>
 
           <div className="produtosLista">
@@ -242,7 +242,7 @@ const Caixa = () => {
                   <strong>{produto.nome}</strong>
                   <p>{formatMoney(produto.preco)}</p>
                   {produto.estoque <= 0 && (
-                    <span className="produtoStatusText">Indisponivel</span>
+                    <span className="produtoStatusText">Indisponível</span>
                   )}
                 </div>
                 <button
@@ -268,7 +268,7 @@ const Caixa = () => {
             {carrinho.length === 0 && (
               <div className="estadoVazioCard">
                 <strong>Carrinho vazio</strong>
-                <p>Adicione produtos para comecar a venda.</p>
+                <p>Adicione produtos para começar a venda.</p>
               </div>
             )}
 
@@ -327,8 +327,8 @@ const Caixa = () => {
                 }
               }}
             >
-              <option value="AVISTA">A vista</option>
-              <option value="CREDITO">Credito</option>
+              <option value="AVISTA">À vista</option>
+              <option value="CREDITO">Crédito</option>
               <option value="FIADO">Fiado</option>
             </select>
 

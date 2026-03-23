@@ -9,11 +9,11 @@ const vendaService = {
       throw new Error("A venda precisa ter pelo menos um item.");
     }
     if (itens.quantidade <= 0) {
-      throw new Error("Um dos itens tem quantidade invalida");
+      throw new Error("Um dos itens tem quantidade inválida");
     }
 
     if (tipoPagamento === TipoPagamento.FIADO && !clienteId) {
-      throw new Error("ID do cliente é obrigatorio para vendas fiado");
+      throw new Error("ID do cliente é obrigatório para vendas fiado");
     }
 
     return await prisma.$transaction(async (tx) => {
@@ -110,7 +110,7 @@ const vendaService = {
     const vendas = await prisma.venda.findMany({
       orderBy: { createdAt: "desc" },
       include: {
-        cliente: true, 
+        cliente: true,
         itens: {
           include: {
             produto: true,

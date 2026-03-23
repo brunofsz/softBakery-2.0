@@ -23,8 +23,8 @@ import { formatDate } from '../utils/formatDate'
 import './Dashboard.css'
 
 const PAYMENT_LABELS = {
-  AVISTA: 'A vista',
-  CREDITO: 'Credito',
+  AVISTA: 'À vista',
+  CREDITO: 'Crédito',
   FIADO: 'Fiado',
 }
 
@@ -43,7 +43,7 @@ const Dashboard = () => {
         setDashboard(data)
       } catch (error) {
         console.error(error)
-        setErrorMessage(error.message || 'Nao foi possivel carregar o dashboard.')
+        setErrorMessage(error.message || 'Não foi possível carregar o dashboard.')
       } finally {
         setLoading(false)
       }
@@ -104,7 +104,7 @@ const Dashboard = () => {
           <div className="dashboardChartsGrid">
             <div className="sectionCard chartCard">
               <div className="sectionCardHeader">
-                <h2>Faturamento dos ultimos 7 dias</h2>
+                <h2>Faturamento dos últimos 7 dias</h2>
               </div>
 
               <div className="chartWrapper">
@@ -122,7 +122,7 @@ const Dashboard = () => {
 
             <div className="sectionCard chartCard">
               <div className="sectionCardHeader">
-                <h2>Tendencia de vendas</h2>
+                <h2>Tendência de vendas</h2>
               </div>
 
               <div className="chartWrapper">
@@ -149,9 +149,9 @@ const Dashboard = () => {
           <div className="dashboardTablesGrid">
             <div className="sectionCard">
               <div className="sectionCardHeader">
-                <h2>Ultimas vendas</h2>
+                <h2>Últimas vendas</h2>
                 <Link to="/vendas" className="primaryBtn">
-                  Ver historico completo
+                  Ver histórico completo
                 </Link>
               </div>
 
@@ -206,7 +206,7 @@ const Dashboard = () => {
                   <div className="detailsItem" key={produto.id}>
                     <div>
                       <strong>{produto.nome}</strong>
-                      <p>Minimo recomendado: {produto.estoqueMinimo}</p>
+                      <p>Mínimo recomendado: {produto.estoqueMinimo}</p>
                     </div>
 
                     <div className="detailsValues">

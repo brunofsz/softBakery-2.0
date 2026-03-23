@@ -13,13 +13,12 @@ const request = async (endpoint, options = {}) => {
   const data = isJsonResponse ? await response.json() : null;
 
   if (!response.ok) {
-    const message =
-      data?.message || data?.error || "Erro na requisicao";
+    const message = data?.message || data?.error || "Erro na requisição";
 
     throw new Error(message);
   }
 
   return data;
-}
+};
 
-export default request
+export default request;

@@ -39,7 +39,7 @@ const Clientes = () => {
       setClientes(data)
     } catch (error) {
       console.error(error)
-      setErrorMessage(error.message || 'Nao foi possivel carregar os clientes.')
+      setErrorMessage(error.message || 'Não foi possível carregar os clientes.')
     } finally {
       setLoading(false)
     }
@@ -86,7 +86,7 @@ const Clientes = () => {
       fecharModal()
     } catch (error) {
       console.error(error)
-      const message = error.message || 'Nao foi possivel salvar o cliente.'
+      const message = error.message || 'Não foi possível salvar o cliente.'
       setModalErrorMessage(message)
       useToast(message, 'error')
     } finally {
@@ -98,10 +98,10 @@ const Clientes = () => {
     try {
       await excluirCliente(id)
       await carregarClientes()
-      useToast('Cliente excluido com sucesso.')
+      useToast('Cliente excluído com sucesso.')
     } catch (error) {
       console.error(error)
-      const message = error.message || 'Nao foi possivel excluir o cliente.'
+      const message = error.message || 'Não foi possível excluir o cliente.'
       useToast(message, 'error')
     }
   }
@@ -133,7 +133,7 @@ const Clientes = () => {
       useToast('Pagamento registrado com sucesso.')
     } catch (error) {
       console.error(error)
-      const message = error.message || 'Nao foi possivel registrar o pagamento.'
+      const message = error.message || 'Não foi possível registrar o pagamento.'
       setPagamentoErrorMessage(message)
       useToast(message, 'error')
     } finally {
@@ -175,9 +175,9 @@ const Clientes = () => {
                 <tr>
                   <th>Nome</th>
                   <th>Telefone</th>
-                  <th>Endereco</th>
+                  <th>Endereço</th>
                   <th>Saldo devedor</th>
-                  <th>Acoes</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>

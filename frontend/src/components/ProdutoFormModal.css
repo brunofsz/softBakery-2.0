@@ -5,16 +5,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(1.5rem, 2dvw, 2rem);
+  padding: clamp(1rem, 1.5dvw, 1.5rem);
   z-index: 1000;
 }
 
 .modalCard {
-  width: min(35dvw, 100%);
-  min-width: min(35rem, 100%);
+  width: min(46rem, 100%);
   background: #fff;
   border-radius: clamp(1.125rem, 1.6dvw, 1.375rem);
-  padding: clamp(1.5rem, 2dvw, 2rem);
+  padding: clamp(1.25rem, 1.6dvw, 1.5rem);
   box-shadow: 0 1.8dvh 4.2dvh rgba(15, 23, 42, 0.2);
 }
 
@@ -23,7 +22,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: clamp(1rem, 1.1dvw, 1.25rem);
-  margin-bottom: clamp(1.5rem, 2dvw, 2rem);
+  margin-bottom: clamp(1rem, 1.4dvw, 1.25rem);
 }
 
 .modalHeader h2 {
@@ -45,19 +44,31 @@
 .modalForm {
   display: flex;
   flex-direction: column;
-  gap: clamp(1rem, 1.1dvw, 1.25rem);
+  gap: clamp(0.85rem, 1dvw, 1rem);
 }
 
 .modalFormGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1rem, 1.1dvw, 1.25rem);
+  gap: clamp(0.85rem, 1dvw, 1rem);
+}
+
+.modalFormGridTop {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.modalFormGridWide {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.modalFormGridCompact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .modalField {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.5rem, 0.6dvw, 0.75rem);
+  gap: clamp(0.35rem, 0.45dvw, 0.5rem);
 }
 
 .modalField span {
@@ -67,12 +78,17 @@
 
 .modalInput {
   width: 100%;
-  padding: clamp(0.75rem, 0.95dvw, 0.9rem) clamp(0.85rem, 1.1dvw, 1rem);
+  padding: clamp(0.65rem, 0.85dvw, 0.8rem) clamp(0.8rem, 1dvw, 0.95rem);
   border: 1px solid #d1d5db;
   border-radius: clamp(0.75rem, 0.9dvw, 0.875rem);
   outline: none;
   font: inherit;
   background: #fff;
+}
+
+.modalTextarea {
+  min-height: 5.25rem;
+  resize: none;
 }
 
 .modalInput:focus {
@@ -98,7 +114,6 @@
 
   .modalCard {
     width: 100%;
-    min-width: 0;
     padding: clamp(1.125rem, 1.5dvw, 1.5rem);
   }
 

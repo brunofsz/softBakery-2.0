@@ -3,15 +3,18 @@ import './ProdutoFormModal.css'
 
 const initialFormState = {
   nome: '',
+  descricao: '',
   preco: '',
   estoque: '',
   estoqueMinimo: '',
+  fornecedorId: '',
 }
 
 const ProdutoFormModal = ({
   isOpen,
   mode = 'create',
   initialValues = initialFormState,
+  fornecedores = [],
   isSubmitting = false,
   errorMessage = '',
   onClose,
@@ -26,9 +29,11 @@ const ProdutoFormModal = ({
 
     setFormData({
       nome: initialValues?.nome ?? '',
+      descricao: initialValues?.descricao ?? '',
       preco: initialValues?.preco ?? '',
       estoque: initialValues?.estoque ?? '',
       estoqueMinimo: initialValues?.estoqueMinimo ?? '',
+      fornecedorId: initialValues?.fornecedorId ?? '',
     })
   }, [initialValues, isOpen])
 
@@ -50,9 +55,11 @@ const ProdutoFormModal = ({
 
     onSubmit?.({
       nome: formData.nome.trim(),
+      descricao: formData.descricao.trim(),
       preco: Number(formData.preco),
       estoque: Number(formData.estoque),
       estoqueMinimo: Number(formData.estoqueMinimo),
+      fornecedorId: Number(formData.fornecedorId),
     })
   }
 
@@ -84,22 +91,36 @@ const ProdutoFormModal = ({
         </div>
 
         <form className="modalForm" onSubmit={handleSubmit}>
-          <label className="modalField">
-            <span>Nome</span>
-            <input
-              type="text"
-              name="nome"
-              value={formData.nome}
-              onChange={handleChange}
-              className="modalInput"
-              placeholder="Ex.: Pao frances"
-              required
-            />
-          </label>
-
-          <div className="modalFormGrid">
+          <div className="modalFormGrid modalFormGridTop">
             <label className="modalField">
-              <span>Preco</span>
+              <span>Nome</span>
+              <input
+                type="text"
+                name="nome"
+                value={formData.nome}
+                onChange={handleChange}
+                className="modalInput"
+                placeholder="Ex.: Pão francês"
+                required
+              />
+            </label>
+
+            <label className="modalField">
+              <span>Descrição</span>
+              <textarea
+                name="descricao"
+                value={formData.descricao}
+                onChange={handleChange}
+                className="modalInput modalTextarea"
+                placeholder="Ex.: Fatiado e fracionado para venda no balcão"
+                rows="2"
+              />
+            </label>
+          </div>
+
+          <div className="modalFormGrid modalFormGridWide">
+            <label className="modalField">
+              <span>Preço</span>
               <input
                 type="number"
                 name="preco"
@@ -114,6 +135,26 @@ const ProdutoFormModal = ({
             </label>
 
             <label className="modalField">
+              <span>Fornecedor</span>
+              <select
+                name="fornecedorId"
+                value={formData.fornecedorId}
+                onChange={handleChange}
+                className="modalInput"
+                required
+              >
+                <option value="">Selecione um fornecedor</option>
+                {fornecedores.map((fornecedor) => (
+                  <option key={fornecedor.id} value={fornecedor.id}>
+                    {fornecedor.nome}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+
+          <div className="modalFormGrid modalFormGridCompact">
+            <label className="modalField">
               <span>Estoque</span>
               <input
                 type="number"
@@ -127,22 +168,22 @@ const ProdutoFormModal = ({
                 required
               />
             </label>
-          </div>
 
-          <label className="modalField">
-            <span>Estoque minimo</span>
-            <input
-              type="number"
-              name="estoqueMinimo"
-              value={formData.estoqueMinimo}
-              onChange={handleChange}
-              className="modalInput"
-              min="0"
-              step="1"
-              placeholder="0"
-              required
-            />
-          </label>
+            <label className="modalField">
+              <span>Estoque mínimo</span>
+              <input
+                type="number"
+                name="estoqueMinimo"
+                value={formData.estoqueMinimo}
+                onChange={handleChange}
+                className="modalInput"
+                min="0"
+                step="1"
+                placeholder="0"
+                required
+              />
+            </label>
+          </div>
 
           {errorMessage && <p className="modalError">{errorMessage}</p>}
 
@@ -160,7 +201,7 @@ const ProdutoFormModal = ({
               {isSubmitting
                 ? 'Salvando...'
                 : mode === 'edit'
-                  ? 'Salvar alteracoes'
+                  ? 'Salvar alterações'
                   : 'Criar produto'}
             </button>
           </div>

@@ -33,7 +33,7 @@ const Fornecedores = () => {
       setFornecedores(data)
     } catch (error) {
       console.error(error)
-      setErrorMessage(error.message || 'Nao foi possivel carregar os fornecedores.')
+      setErrorMessage(error.message || 'Não foi possível carregar os fornecedores.')
     } finally {
       setLoading(false)
     }
@@ -80,7 +80,7 @@ const Fornecedores = () => {
       fecharModal()
     } catch (error) {
       console.error(error)
-      const message = error.message || 'Nao foi possivel salvar o fornecedor.'
+      const message = error.message || 'Não foi possível salvar o fornecedor.'
       setModalErrorMessage(message)
       useToast(message, 'error')
     } finally {
@@ -92,10 +92,10 @@ const Fornecedores = () => {
     try {
       await excluirFornecedor(id)
       await carregarFornecedores()
-      useToast('Fornecedor excluido com sucesso.')
+      useToast('Fornecedor excluído com sucesso.')
     } catch (error) {
       console.error(error)
-      const message = error.message || 'Nao foi possivel excluir o fornecedor.'
+      const message = error.message || 'Não foi possível excluir o fornecedor.'
       useToast(message, 'error')
     }
   }
@@ -130,7 +130,7 @@ const Fornecedores = () => {
                   <th>E-mail</th>
                   <th>Telefone</th>
                   <th>Cidade</th>
-                  <th>Acoes</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>

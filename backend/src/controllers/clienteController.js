@@ -1,4 +1,3 @@
-// src/controllers/clienteController.js
 import clienteService from "../services/clienteService.js";
 
 const clienteController = {

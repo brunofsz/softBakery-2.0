@@ -92,7 +92,7 @@ const FornecedorFormModal = ({
               value={formData.nome}
               onChange={handleChange}
               className="modalInput"
-              placeholder="Ex.: Moinho Uniao"
+              placeholder="Ex.: Moinho União"
               required
             />
           </label>
@@ -122,14 +122,14 @@ const FornecedorFormModal = ({
           </label>
 
           <label className="modalField">
-            <span>Endereco</span>
+            <span>Endereço</span>
             <input
               type="text"
               name="endereco"
               value={formData.endereco}
               onChange={handleChange}
               className="modalInput"
-              placeholder="Cidade ou endereco completo"
+              placeholder="Cidade ou endereço completo"
             />
           </label>
 
@@ -149,7 +149,7 @@ const FornecedorFormModal = ({
               {isSubmitting
                 ? 'Salvando...'
                 : mode === 'edit'
-                  ? 'Salvar alteracoes'
+                  ? 'Salvar alterações'
                   : 'Criar fornecedor'}
             </button>
           </div>

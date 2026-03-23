@@ -1,7 +1,7 @@
 import vendaService from "../services/vendaService.js";
 
 const vendaController = {
-  create: async (req, res) => { 
+  create: async (req, res) => {
     try {
       const venda = await vendaService.create(req.body);
       res.status(201).json(venda);
@@ -30,7 +30,7 @@ const vendaController = {
     } catch (error) {
       res.status(404).json({ error: error.message });
     }
-  },  
+  },
 };
 
 export default vendaController;

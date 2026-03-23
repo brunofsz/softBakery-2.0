@@ -107,14 +107,14 @@ const ClienteFormModal = ({
           </label>
 
           <label className="modalField">
-            <span>Endereco</span>
+            <span>Endereço</span>
             <input
               type="text"
               name="endereco"
               value={formData.endereco}
               onChange={handleChange}
               className="modalInput"
-              placeholder="Rua, numero e bairro"
+              placeholder="Rua, número e bairro"
             />
           </label>
 
@@ -134,7 +134,7 @@ const ClienteFormModal = ({
               {isSubmitting
                 ? 'Salvando...'
                 : mode === 'edit'
-                  ? 'Salvar alteracoes'
+                  ? 'Salvar alterações'
                   : 'Criar cliente'}
             </button>
           </div>

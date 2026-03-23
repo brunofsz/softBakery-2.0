@@ -43,7 +43,7 @@ const produtoService = {
   },
   getById: async (id) => {
     if (Number.isNaN(id)) {
-      throw new Error("ID Invalido");
+      throw new Error("ID inválido");
     }
     const produto = await prisma.produto.findUnique({
       where: { id: id },
@@ -53,7 +53,7 @@ const produtoService = {
   },
   update: async (id, data) => {
     if (Number.isNaN(id)) {
-      throw new Error("ID Invalido");
+      throw new Error("ID inválido");
     }
     if (data.preco && data.preco <= 0) {
       throw new Error("Preço deve ser maior que zero");
@@ -79,7 +79,7 @@ const produtoService = {
   },
   disable: async (id) => {
     if (Number.isNaN(id)) {
-      throw new Error("ID Invalido");
+      throw new Error("ID inválido");
     }
     const updated = await prisma.produto.update({
       where: { id: id },
@@ -92,7 +92,7 @@ const produtoService = {
   },
   enable: async (id) => {
     if (Number.isNaN(id)) {
-      throw new Error("ID Invalido");
+      throw new Error("ID inválido");
     }
     const updated = await prisma.produto.update({
       where: { id: id },
@@ -105,7 +105,7 @@ const produtoService = {
   },
   delete: async (id) => {
     if (Number.isNaN(id)) {
-      throw new Error("ID Invalido");
+      throw new Error("ID inválido");
     }
     const deleted = await prisma.produto.delete({
       where: {

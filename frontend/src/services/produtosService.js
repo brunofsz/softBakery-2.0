@@ -1,25 +1,20 @@
-import request from "./api";
+import request from './api'
 
-export async function listarProdutos() {
-  return request("/produtos");
-}
+export const listarProdutos = async () => request('/produtos')
 
-export async function criarProduto(produto) {
-  return request("/produtos", {
-    method: "POST",
+export const criarProduto = async (produto) =>
+  request('/produtos', {
+    method: 'POST',
     body: JSON.stringify(produto),
-  });
-}
+  })
 
-export async function atualizarProduto(id, produto) {
-  return request(`/produtos/${id}`, {
-    method: "PUT",
+export const atualizarProduto = async (id, produto) =>
+  request(`/produtos/${id}`, {
+    method: 'PUT',
     body: JSON.stringify(produto),
-  });
-}
+  })
 
-export async function excluirProduto(id) {
-  return request(`/produtos/${id}`, {
-    method: "DELETE",
-  });
-}
+export const excluirProduto = async (id) =>
+  request(`/produtos/${id}`, {
+    method: 'DELETE',
+  })
