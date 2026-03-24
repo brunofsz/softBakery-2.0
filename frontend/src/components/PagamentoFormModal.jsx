@@ -124,7 +124,6 @@ const PagamentoFormModal = ({
               >
                 <option value="AVISTA">À vista</option>
                 <option value="CREDITO">Crédito</option>
-                <option value="FIADO">Fiado</option>
               </select>
             </label>
           </div>
