@@ -114,7 +114,7 @@ npm run dev
 
 ## Deploy
 
-* Backend: [https://softbakery-backend-production.up.railway.app](https://softbakery-backend-production.up.railway.app)
+* Backend: [https://softbakery-backend-production.up.railway.app](https://softbakery-2-0.onrender.com/)
 * Frontend: [https://soft-bakery-2-0.vercel.app/](https://soft-bakery-2-0.vercel.app/)
 
 
